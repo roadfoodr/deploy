@@ -20,3 +20,6 @@ urlpatterns = [
     path('', include('rftrackr.urls')),
     path('admin/', admin.site.urls),
 ]
+
+
+# ### MDP json responses added to views.py
