@@ -1,0 +1,16 @@
+version: "3"
+services:
+
+  models:
+    image: tp33/django
+    volumes:
+      - ./app:/app
+    ports:
+      - "8001:8000"
+    networks:
+      - backend
+    command: bash -c "mod_wsgi-express start-server --working-directory ./app --reload-on-changes ./app/roadfoodr/roadfoodr/wsgi.py"
+
+networks:
+  backend:
+
