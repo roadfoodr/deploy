@@ -19,4 +19,7 @@ from . import views
 
 urlpatterns = [
     path('', views.index, name='index'),
+    path('api/v1/users/', views.users_get_json, name='Retrieve all users'),
+    path('api/v1/users/<int:user_id>/', views.users_get_json, name='Retrieve one user'),
+    path('api/v1/users/<int:user_id>/delete', views.user_delete, name='Delete user'),
 ]

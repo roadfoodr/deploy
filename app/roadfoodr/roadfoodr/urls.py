@@ -24,6 +24,3 @@ urlpatterns = [
     path('', include('rftrackr.urls')),
     path('admin/', admin.site.urls),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-
-
-# ### MDP json responses added to views.py
