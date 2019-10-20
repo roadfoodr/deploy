@@ -1,0 +1,20 @@
+#!/bin/bash
+
+# https://www.reddit.com/r/kubernetes/comments/aon744/how_can_i_run_commands_in_a_container_once_it/
+# https://docs.docker.com/compose/startup-order/
+# both rely on nc
+
+# wait for mysql db to be up
+# until nc -z -v -w45 db
+# until curl db_3306
+# do
+#   echo "Waiting for database connection..."
+#   sleep 5
+# done
+
+python /app/roadfoodr/manage.py migrate auth
+python /app/roadfoodr/manage.py migrate
+python /app/roadfoodr/manage.py loaddata initial_data
+python /app/roadfoodr/manage.py loaddata superuser
+
+mod_wsgi-express start-server --working-directory /app/roadfoodr --reload-on-changes /app/roadfoodr/roadfoodr/wsgi.py

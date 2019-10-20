@@ -1,7 +1,10 @@
 version: '3.7'
 services:
   mysql:
-    image: mysql:8.0.17
+# https://github.com/docker-library/mysql/issues/302
+# https://github.com/docker/for-win/issues/4824
+    # image: mysql:8.0.17
+    image: mysql:5.7.16
     networks:
       backend:
         aliases:
@@ -12,7 +15,8 @@ services:
     command: --init-file /data/application/init.sql
     environment:
       - MYSQL_ROOT_PASSWORD=$$3cureUS
-      - MYSQL_DATABASE=db
+      # - MYSQL_DATABASE=db
+      - MYSQL_DATABASE=deploy
 
   web:
     image: tp33/django
@@ -26,7 +30,8 @@ services:
       - ./app:/app
     ports:
       - "8001:8000"
-    command: bash -c "mod_wsgi-express start-server --working-directory /app/roadfoodr --reload-on-changes /app/roadfoodr/roadfoodr/wsgi.py"
+    # command: bash -c "mod_wsgi-express start-server --working-directory /app/roadfoodr --reload-on-changes /app/roadfoodr/roadfoodr/wsgi.py"
+    command: /app/init_script.bsh
 
 networks:
   backend:

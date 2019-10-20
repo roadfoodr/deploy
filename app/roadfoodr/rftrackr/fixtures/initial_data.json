@@ -1,0 +1,1 @@
+[{"model": "rftrackr.user", "pk": 2, "fields": {"name_first": "Mad", "name_last": "Max", "pub_date": "2019-10-20T05:02:40Z"}}, {"model": "rftrackr.roadfood", "pk": 1, "fields": {"name": "Bellair Market"}}, {"model": "rftrackr.visit", "pk": 2, "fields": {"user_id": 2, "rf_id": 1, "visit_date": "2019-10-20T06:37:08Z"}}]
