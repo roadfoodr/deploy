@@ -11,8 +11,11 @@
 #   echo "Waiting for database connection..."
 #   sleep 5
 # done
+sleep 20
 
-python /app/roadfoodr/manage.py migrate auth
+# python /app/roadfoodr/manage.py migrate auth
+python /app/roadfoodr/manage.py migrate
+python /app/roadfoodr/manage.py makemigrations rftrackr
 python /app/roadfoodr/manage.py migrate
 python /app/roadfoodr/manage.py loaddata initial_data
 python /app/roadfoodr/manage.py loaddata superuser

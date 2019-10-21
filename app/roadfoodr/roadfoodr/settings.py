@@ -8,6 +8,13 @@ https://docs.djangoproject.com/en/2.2/topics/settings/
 
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.2/ref/settings/
+    volumes:
+      - ./init.sql:/data/application/init.sql
+      - ./db:/var/lib/mysql
+    command: --init-file /data/application/init.sql
+    environment:
+      - MYSQL_ROOT_PASSWORD=$$3cureUS
+      - MYSQL_DATABASE=db
 """
 
 import os
@@ -25,7 +32,7 @@ SECRET_KEY = 'g^ks-wfpj0!d_lzx3!-4p-c^zyg=xdd!^lfz2dl6t3@%7+%9&#'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -84,8 +91,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'deploy',
-        # 'USER': 'www',
-        'USER': 'root',
+        'USER': 'www',
+        # 'USER': 'root',
         'PASSWORD': '$3cureUS',
         'HOST': 'db',
     }

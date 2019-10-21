@@ -15,7 +15,8 @@ services:
     command: --init-file /data/application/init.sql
     environment:
       - MYSQL_ROOT_PASSWORD=$$3cureUS
-      # - MYSQL_DATABASE=db
+      - MYSQL_USER=www
+      - MYSQL_PASSWORD=$$3cureUS
       - MYSQL_DATABASE=deploy
 
   web:
