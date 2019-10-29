@@ -19,7 +19,9 @@ from . import views
 
 urlpatterns = [
     path('', views.index, name='index'),
-    path('api/v1/users/', views.users_get_json, name='Retrieve all users'),
-    path('api/v1/users/<int:user_id>/', views.users_get_json, name='Retrieve one user'),
-    path('api/v1/users/<int:user_id>/delete', views.user_delete, name='Delete user'),
+    path('api/v1/users/', views.api_users_get_json, name='Retrieve all users'),
+    path('api/v1/users/<int:user_id>/', views.api_user_get_json, name='Retrieve one user'),
+    path('api/v1/users/<int:user_id>/delete', views.api_user_delete, name='Delete user'),
+    path('api/v1/users/<int:user_id>/update', views.api_user_update, name='Update user'),
+    path('api/v1/users/create', views.api_user_create, name='Create user'),
 ]
