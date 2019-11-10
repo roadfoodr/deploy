@@ -142,6 +142,9 @@ STATIC_URL = '/static/'
 
 # Additions to default below
 
+USER_LOG_DIR = os.path.join(PROJECT_DIR, 'log')
+
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,

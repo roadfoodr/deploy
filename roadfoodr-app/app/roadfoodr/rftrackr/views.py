@@ -3,17 +3,28 @@ from django.http import JsonResponse
 from django.forms.models import model_to_dict
 from django.views.decorators.csrf import csrf_exempt
 from django.utils import timezone
+from django.conf import settings
+import os, json, logging
+from collections import OrderedDict
 
 from rftrackr.models import User, Roadfood, Visit
 
 
 def index(request):
     return render(request, 'index.html')
+def testpage(request):
+    return render(request, 'testpage.html')
 
 
 '''
 API views and utility functions
 '''
+
+USER_REQUIRED_FIELDS = {'name_first', 'name_last'}
+USER_AUTO_FIELDS = {'user_id'}
+
+DEBUG_LOGGER = logging.getLogger(__name__)
+
 
 def result_with_status(result=None, status=None):
     ''' utility function to add status message to result structure '''
@@ -22,8 +33,21 @@ def result_with_status(result=None, status=None):
     response['result'] = result if result else {}
     return response
 
-USER_REQUIRED_FIELDS = {'name_first', 'name_last'}
-USER_AUTO_FIELDS = {'user_id'}
+def get_client_ip(request):
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR', None)
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[-1].strip()
+    else:
+        ip = request.META.get('REMOTE_ADDR', None)
+    return ip
+
+def log_user_visit(post_data=None):
+    if post_data is None:
+        return
+    os.makedirs(settings.USER_LOG_DIR, exist_ok=True)
+    with open(os.path.join(settings.USER_LOG_DIR, 'user_visits.txt'), 'a') as f:
+        print(post_data, file=f)
+
 
 
 @csrf_exempt
@@ -105,5 +129,33 @@ def api_user_update(request, user_id=None):
     return JsonResponse(result_with_status(result, status), safe=False)
 
 
+@csrf_exempt
+def api_record_user(request):
+    result, status = {}, 'error'
+    if request.method == "GET":
+        status = 'POST required for record_user'
+    elif request.method == "POST":
+        post_data = OrderedDict()
+        post_data['timestamp'] = timezone.now().strftime("%Y-%m-%d %H:%M:%S %Z")
+        client_ip = get_client_ip(request)
+        if client_ip:
+            post_data['client_ip'] = client_ip
+        user_agent = request.META['HTTP_USER_AGENT']
+        if user_agent:
+            post_data['userAgent'] = user_agent
 
+        post_items = list(request.POST.items())
+        if not post_items:
+            post_items = json.loads(request.body.decode('utf-8')).items()
+            # DEBUG_LOGGER.info(post_items)
 
+        for key, value in sorted(post_items):
+            post_data[key] = value
+        
+        log_user_visit(json.dumps(post_data))
+        result = post_data
+        status = 'ok'
+    else:
+        status = 'Unknown request'
+
+    return JsonResponse(result_with_status(result, status), safe=False)
