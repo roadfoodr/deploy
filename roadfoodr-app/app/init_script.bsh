@@ -11,7 +11,7 @@
 #   echo "Waiting for database connection..."
 #   sleep 5
 # done
-sleep 20
+sleep 18
 
 # python /app/roadfoodr/manage.py migrate auth
 python /app/roadfoodr/manage.py migrate
@@ -20,4 +20,6 @@ python /app/roadfoodr/manage.py migrate
 python /app/roadfoodr/manage.py loaddata initial_data
 python /app/roadfoodr/manage.py loaddata superuser
 
-mod_wsgi-express start-server --working-directory /app/roadfoodr --reload-on-changes /app/roadfoodr/roadfoodr/wsgi.py
+# mod_wsgi-express start-server --working-directory /app/roadfoodr --reload-on-changes /app/roadfoodr/roadfoodr/wsgi.py
+echo "Starting Django development server"
+python /app/roadfoodr/manage.py runserver 0.0.0.0:8000

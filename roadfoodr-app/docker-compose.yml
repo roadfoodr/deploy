@@ -20,7 +20,9 @@ services:
       - MYSQL_DATABASE=deploy
 
   web:
-    image: tp33/django
+    build: ./docker_build
+    image: python3.8/django
+
     networks:
       backend:
         aliases:
@@ -31,8 +33,9 @@ services:
       - ./app:/app
     ports:
       - "8001:8000"
-    # command: bash -c "mod_wsgi-express start-server --working-directory /app/roadfoodr --reload-on-changes /app/roadfoodr/roadfoodr/wsgi.py"
+    # command: python /app/roadfoodr/manage.py runserver 0.0.0.0:8000
     command: /app/init_script.bsh
+
 
 networks:
   backend:

@@ -1,0 +1,5 @@
+django==2.2.4
+psycopg2>=2.8,<2.9
+mysqlclient==1.4.4
+requests
+# nmap
