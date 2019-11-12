@@ -15,15 +15,18 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from . import views
+from . import views, views_api, views_admin
 
 urlpatterns = [
     path('', views.index, name='index'),
     path('testpage', views.testpage, name='testpage'),
-    path('api/v1/users/', views.api_users_get_json, name='Retrieve all users'),
-    path('api/v1/users/<int:user_id>/', views.api_user_get_json, name='Retrieve one user'),
-    path('api/v1/users/<int:user_id>/delete', views.api_user_delete, name='Delete user'),
-    path('api/v1/users/<int:user_id>/update', views.api_user_update, name='Update user'),
-    path('api/v1/users/create', views.api_user_create, name='Create user'),
-    path('recordUser', views.api_record_user, name='Record User'),
+
+    path('api/v1/users/', views_api.api_users_get_json, name='Retrieve all users'),
+    path('api/v1/users/<int:user_id>/', views_api.api_user_get_json, name='Retrieve one user'),
+    path('api/v1/users/<int:user_id>/delete', views_api.api_user_delete, name='Delete user'),
+    path('api/v1/users/<int:user_id>/update', views_api.api_user_update, name='Update user'),
+    path('api/v1/users/create', views_api.api_user_create, name='Create user'),
+    path('recordUser', views_api.api_record_user, name='Record User'),
+    
+    path('admin/visualization', views_admin.admin_visualization, name='Visualize user logs'),
 ]
