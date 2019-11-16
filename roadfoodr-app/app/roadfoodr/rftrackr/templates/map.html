@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+
+
+{% block title %} | Map{% endblock %}
+
+{% block head %}
+{{map.header.render|safe}}
+{% endblock %}
+
+{% block content %}
+<h1>
+<em><u>Your Roadfood Visits</u><em>
+</h1>
+
+  {{map.html.render|safe}}
+  <script>
+    {{map.script.render|safe}}
+  </script>
+{% endblock %}

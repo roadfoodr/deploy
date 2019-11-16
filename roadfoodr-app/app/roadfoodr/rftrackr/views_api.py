@@ -49,7 +49,7 @@ def log_user_visit(post_data=None):
             print(post_data, file=f)
 
     post_fields = json.loads(post_data)
-    # DEBUG_LOGGER.info(post_fields)
+    DEBUG_LOGGER.info(post_fields)
 
     response = requests.post(LOG_USER_VISITS_URL, json=post_fields)
     return response.text
@@ -162,6 +162,7 @@ def api_record_user(request):
             post_data[key] = value
         
         result = log_user_visit(json.dumps(post_data))
+        result = ''
         status = 'ok'
     else:
         status = 'Unknown request'
