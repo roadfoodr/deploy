@@ -1,12 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
+
+{# Load the tag library #}
+{% load bootstrap4 %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript jquery='full' %}
+
+{# Display django.contrib.messages as Bootstrap alerts #}
+{% bootstrap_messages %}
+
   <head>
     <title>Roadfoodr{% block title %}{% endblock %}</title>
       {% block head %}{% endblock %}
   </head>
    
   <body>
-    {% block content %}{% endblock %}
+        {% block content %}{% endblock %}
   </body>
 
 

@@ -1,11 +1,21 @@
 {% extends "base.html" %}
 
-
-
 {% block title %} | Home{% endblock %}
+
+{# Load the tag library #}
+{% load bootstrap4 %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript jquery='full' %}
+
+{# Display django.contrib.messages as Bootstrap alerts #}
+{% bootstrap_messages %}
 
 {% block content %}
 <h1>
 Welcome to Roadfood Tracker!
 </h1>
+{% bootstrap_button "See the map" button_type="link" href="/map" button_class="btn-primary" %}
+
 {% endblock %}

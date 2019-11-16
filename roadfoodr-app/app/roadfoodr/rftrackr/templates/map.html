@@ -1,5 +1,14 @@
 {% extends "base.html" %}
 
+{# Load the tag library #}
+{% load bootstrap4 %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript jquery='full' %}
+
+{# Display django.contrib.messages as Bootstrap alerts #}
+{% bootstrap_messages %}
 
 
 {% block title %} | Map{% endblock %}
@@ -10,7 +19,9 @@
 
 {% block content %}
 <h1>
-<em><u>Your Roadfood Visits</u><em>
+        <div class= "bg-primary text-white">
+        <em>Your Roadfood Visits</em>
+        </div>
 </h1>
 
   {{map.html.render|safe}}
