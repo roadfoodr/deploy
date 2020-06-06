@@ -1,4 +1,4 @@
-django==2.2.8
+django==2.2.13
 psycopg2>=2.8,<2.9
 mysqlclient==1.4.4
 requests
